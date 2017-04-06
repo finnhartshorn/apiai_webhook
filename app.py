@@ -1,12 +1,18 @@
+from __future__ import print_function
+from future.standard_library import install_aliases
+install_aliases()
+
 from flask import Flask, request, make_response
 import os
 import json
 
-from urllib.parse import urlparse, urlencode
-from urllib.request import urlopen, Request
-from urllib.error import HTTPError
+# Not needed yet
+# from urllib.parse import urlparse, urlencode
+# from urllib.request import urlopen, Request
+# from urllib.error import HTTPError
 
 app = Flask(__name__)
+
 
 @app.route('/')
 def home():
