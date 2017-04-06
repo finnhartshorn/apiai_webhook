@@ -1,0 +1,7 @@
+{
+  "name": "API.AI webhook test",
+  "description": "API.AI webhook test, just logs received request",
+  "repository": "https://github.com/api-ai/apiai-weather-webhook-sample",
+  "image": "heroku/python",
+  "keywords": ["api.ai", "natural language"]
+}
