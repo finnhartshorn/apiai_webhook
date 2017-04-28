@@ -1,5 +1,5 @@
 # apiai_webhook
 
-A very simply flask webhook. Just logs the request and replies with a static success message.
+A very simple flask webhook. Does not interact with steelconnect rest api yet.
 
-Hosted on heroku at https://apiai-webhook-test.herokuapp.com/
+Hosted on Google Cloud Platform App Engine at https://steelconnect-api-ai.appspot.com/
