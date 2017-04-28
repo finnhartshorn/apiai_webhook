@@ -16,7 +16,7 @@ def createSite(parameters):
     except KeyError as e:
         logging.error("Error processing createSite intent. {0}".format(e))
 
-    speech = "Recieved request to create {} in {}, {}".format(site_type, city, country)
+    speech = "{} created in {}, {}".format(site_type.capitalize(), city, country)
 
     # TODO: Handle this in calling class, just return speech
     response = {
