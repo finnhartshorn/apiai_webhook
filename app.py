@@ -30,11 +30,12 @@ def webhook():
 
     response_message = process_request(req)
 
-    return format_response(response_message)
+    return response_message
 
 
 def process_request(req):
     """
+    Determines the intent of the request and passes its parameters to the relevant method
     :param req: json request from API.AI
     :type req: json
     :return: json formatted response
