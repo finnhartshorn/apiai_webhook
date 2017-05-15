@@ -1,3 +1,4 @@
 Flask==0.12.1
 future==0.16.0
 gunicorn==19.7.1
+requests==2.13.0
