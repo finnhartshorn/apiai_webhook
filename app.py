@@ -16,50 +16,42 @@ def home():
     return "This app works"
 
 
-# https://github.com/api-ai/apiai-weather-webhook-sample/blob/master/app.py
-
-@app.route('/webhook', methods=['POST'])
-def webhook():
+@app.route('/webhook/createsite', methods=['POST'])
+def create_site():
     """
-    :return: Returns a json formatted response containing the speech to be read back to the user, giving details on the result of the request
+    :return: Creates a site of the given type at the given location and returns a confirmation message to be read out to the user
     :rtype: json
     """
     req = request.get_json(silent=True, force=True)
 
     logging.debug("Request\n" + json.dumps(req, indent=4))
 
-    response_message = process_request(req)
+    parameters = check_request(req, "CreateSite")           # CreateSite is what the API.AI intent is called
 
-    return response_message
+    response = create_site.create_site(parameters)          # Pass the parameters to the function that handles the API calls
+
+    return format_response(response)                        # Correctly format the text response into json for API.AI to read out to the user
 
 
-def process_request(req):
+def check_request(req, expected_action_type):
     """
-    Determines the intent of the request and passes its parameters to the relevant method
+    Checks whether the request has the correct action type and extracts the parameters
+    :param expected_action_type: The action string expected
+    :type expected_action_type: string
     :param req: json request from API.AI
     :type req: json
-    :return: json formatted response
-    :rtype: json
+    :return: parameters
+    :rtype: python dictionary of the parameters passed in from the API.AI call
     """
     try:
         action_type = req["result"]["action"]
         parameters = req["result"]["parameters"]
     except KeyError as e:
         logging.error("Error accessing action type {0}".format(e))
-        return format_response("Unknown error occurred, please try again.")
+        return {}
 
-    if action_type == "CreateSite":
-        response = create_site.create_site(parameters)
-
-    elif action_type == "DeleteSite":
-        raise NotImplementedError
-
-    else:
-        error = "Error unknown action {}".format(action_type)
-        logging.error(error)
-        response = error
-
-    return format_response(response)
+    if action_type == expected_action_type:
+        return parameters
 
 
 def format_response(speech):
