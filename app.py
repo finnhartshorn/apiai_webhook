@@ -6,7 +6,7 @@ from flask import Flask, request, make_response
 import json
 import logging
 
-from actions import create_site
+from actions.create_site import create_site
 
 app = Flask(__name__)
 
@@ -17,7 +17,7 @@ def home():
 
 
 @app.route('/webhook/createsite', methods=['POST'])
-def create_site():
+def create_site_webhook():
     """
     :return: Creates a site of the given type at the given location and returns a confirmation message to be read out to the user
     :rtype: json
@@ -28,7 +28,7 @@ def create_site():
 
     parameters = check_request(req, "CreateSite")           # CreateSite is what the API.AI intent is called
 
-    response = create_site.create_site(parameters)          # Pass the parameters to the function that handles the API calls
+    response = create_site(parameters)          # Pass the parameters to the function that handles the API calls
 
     return format_response(response)                        # Correctly format the text response into json for API.AI to read out to the user
 

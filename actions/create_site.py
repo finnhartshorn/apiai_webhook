@@ -22,9 +22,9 @@ def create_site(parameters):
         # API Call Here
         url = 'https://monash.riverbed.cc/api/scm.config/1.0/org/org-Monash-d388075e40cf1bfd/sites'
         data = {"id": "", "name": name, "org": "Monash", "longname": name, "uplinks": [""], "networks": [""], "street_address": "", "city": city, "country": country_code, "timezone": "", "size": 0, "uid": ""}
-        response = json.dumps(data, indent=4)
-        res = requests.post(url, data=data, auth=HTTPBasicAuth('Shaylin', 'sche259'))
-        
+        request = json.dumps(data, indent=4)
+        res = requests.post(url, data=request, auth=HTTPBasicAuth('Shaylin', 'sche259'))
+        logging.debug(res)
         # Ends Here
 
         speech = "{} created in {}, {}".format(site_type.capitalize(), city, country_name)
