@@ -16,42 +16,34 @@ def home():
     return "This app works"
 
 
-@app.route('/webhook/createsite', methods=['POST'])
-def create_site_webhook():
+@app.route('/webhook/', methods=['POST'])
+def webhook():
     """
-    :return: Creates a site of the given type at the given location and returns a confirmation message to be read out to the user
+    :return: Extracts parameters
     :rtype: json
     """
     req = request.get_json(silent=True, force=True)
 
     logging.debug("Request\n" + json.dumps(req, indent=4))
 
-    parameters = check_request(req, "CreateSite")           # CreateSite is what the API.AI intent is called
+    response = "Intent Unhandled Error"
 
-    response = create_site(parameters)          # Pass the parameters to the function that handles the API calls
-
-    return format_response(response)                        # Correctly format the text response into json for API.AI to read out to the user
-
-
-def check_request(req, expected_action_type):
-    """
-    Checks whether the request has the correct action type and extracts the parameters
-    :param expected_action_type: The action string expected
-    :type expected_action_type: string
-    :param req: json request from API.AI
-    :type req: json
-    :return: parameters
-    :rtype: python dictionary of the parameters passed in from the API.AI call
-    """
     try:
         action_type = req["result"]["action"]
+        intent_type = req["result"]["metadata"]["intentName"]
         parameters = req["result"]["parameters"]
-    except KeyError as e:
-        logging.error("Error accessing action type {0}".format(e))
-        return {}
+        if action_type == "CreateSite":
+            response = create_site(parameters)
+        # elsif action_type == "SomeOtherAction"            # Use elsif to add extra functionality
 
-    if action_type == expected_action_type:
-        return parameters
+    except KeyError as e:
+        logging.error("Error processing request {0}".format(e))
+        response = "There was an error processing your request"
+
+
+              # Pass the parameters to the function that handles the API calls
+
+    return format_response(response)                        # Correctly format the text response into json for API.AI to read out to the user
 
 
 def format_response(speech):
