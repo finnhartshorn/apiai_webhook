@@ -6,6 +6,7 @@ from flask import Flask, request, make_response
 import json
 import logging
 
+from actions.create_uplink import create_uplink
 from actions.create_site import create_site
 
 app = Flask(__name__)
@@ -33,6 +34,8 @@ def webhook():
         parameters = req["result"]["parameters"]
         if action_type == "CreateSite":
             response = create_site(parameters)
+        elif action_type == "CreateUplink":
+            response = create_uplink(parameters)
         # elsif action_type == "SomeOtherAction"            # Use elsif to add extra functionality
         else:
             response = "Error: This feature has not been implemented yet"
