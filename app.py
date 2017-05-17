@@ -19,14 +19,13 @@ def home():
 @app.route('/webhook/', methods=['POST'])
 def webhook():
     """
-    :return: Extracts parameters
+    Extracts the intent, action and paramaters and passes them to the handling method.
+    :return: Returns a json formatted response containing the text to be read back to the user
     :rtype: json
     """
     req = request.get_json(silent=True, force=True)
 
     logging.debug("Request\n" + json.dumps(req, indent=4))
-
-    response = "Intent Unhandled Error"
 
     try:
         action_type = req["result"]["action"]
@@ -35,13 +34,13 @@ def webhook():
         if action_type == "CreateSite":
             response = create_site(parameters)
         # elsif action_type == "SomeOtherAction"            # Use elsif to add extra functionality
+        else:
+            response = "Error: This feature has not been implemented yet"
+            logging.error("Not implemented error action: {} intent: {}".format(action_type, intent_type))
 
     except KeyError as e:
         logging.error("Error processing request {0}".format(e))
         response = "There was an error processing your request"
-
-
-              # Pass the parameters to the function that handles the API calls
 
     return format_response(response)                        # Correctly format the text response into json for API.AI to read out to the user
 
