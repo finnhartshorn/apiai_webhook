@@ -7,6 +7,7 @@ import json
 import logging
 
 from actions.create_site import create_site
+from actions.list_sites import list_sites
 
 app = Flask(__name__)
 
@@ -33,6 +34,8 @@ def webhook():
         parameters = req["result"]["parameters"]
         if action_type == "CreateSite":
             response = create_site(parameters)
+        elif action_type == "ListCites":
+            response = list_sites(parameters)
         # elsif action_type == "SomeOtherAction"            # Use elsif to add extra functionality
         else:
             response = "Error: This feature has not been implemented yet"
