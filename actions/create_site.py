@@ -27,7 +27,14 @@ def create_site(parameters):
         logging.debug(res)
         # Ends Here
 
-        speech = "{} created in {}, {}".format(site_type.capitalize(), city, country_name)
+        if res.status_code == 200:
+            speech = "{} created in {}, {}".format(site_type.capitalize(), city, country_name)
+        elif res.status_code == 400:
+            speech = "Invalid parameters: {}".format(res.json()["error"]["message"])
+        elif res.status_code == 500:
+            speech = "Error: Could not create site"
+        else:
+            speech = "Error: Could not connect to Steelconnect"
 
         logging.debug(speech)
 
