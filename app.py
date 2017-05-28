@@ -8,6 +8,7 @@ import logging
 
 from actions.create_uplink import create_uplink
 from actions.create_site import create_site
+from actions.create_wan import create_wan
 
 app = Flask(__name__)
 
@@ -36,6 +37,8 @@ def webhook():
             response = create_site(parameters)
         elif action_type == "CreateUplink":
             response = create_uplink(parameters)
+        elif action_type == "CreateWan":
+            response = create_wan(parameters)
         # elsif action_type == "SomeOtherAction"            # Use elsif to add extra functionality
         else:
             response = "Error: This feature has not been implemented yet"
