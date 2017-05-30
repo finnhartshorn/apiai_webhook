@@ -6,6 +6,7 @@ from flask import Flask, request, make_response
 import json
 import logging
 
+import actions
 from actions.create_uplink import create_uplink
 from actions.create_site import create_site
 from actions.list_sites import list_sites
@@ -33,20 +34,20 @@ def webhook():
         action_type = req["result"]["action"]
         intent_type = req["result"]["metadata"]["intentName"]
         parameters = req["result"]["parameters"]
-        if action_type == "CreateSite":
-            response = create_site(parameters)
-        elif action_type == "CreateUplink":
-            response = create_uplink(parameters)
-        elif action_type == "ListSites":
-            response = list_sites(parameters)
-        # elsif action_type == "SomeOtherAction"            # Use elsif to add extra functionality
-        else:
-            response = "Error: This feature has not been implemented yet"
-            logging.error("Not implemented error action: {} intent: {}".format(action_type, intent_type))
-
     except KeyError as e:
-        logging.error("Error processing request {0}".format(e))
-        response = "There was an error processing your request"
+        logging.error("Error processing request {}".format(e))
+        return format_response("There was an error processing your request")
+
+    if action_type == "CreateSite":
+        response = create_site(parameters)
+    elif action_type == "CreateUplink":
+        response = create_uplink(parameters)
+    elif action_type == "ListSites":
+        response = list_sites(parameters)
+    # elif action_type == "SomeOtherAction"            # Use elif to add extra functionality
+    else:
+        response = "Error: This feature has not been implemented yet"
+        logging.error("Not implemented error action: {} intent: {}".format(action_type, intent_type))
 
     return format_response(response)                        # Correctly format the text response into json for API.AI to read out to the user
 
