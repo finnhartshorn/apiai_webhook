@@ -35,3 +35,17 @@ case1_basic_request = {
   },
   "sessionId": "62e05bd1-9637-403b-ac7a-d46d1ed4f941"
 }
+
+
+case1_success_0_sites_return = []
+case1_success_1_site_return = [{"name": "Berlin_Shop"}]
+case1_success_2_sites_return = [1, 2]
+case1_success_5_sites_return = [1, 2, 3, 4, 5]
+case1_404_return = []
+
+case1_success_0_sites = "There are no sites in the Monash organisation"
+case1_success_1_site = "There is one site in the Monash organisation, it is called Berlin_Shop"
+case1_success_2_sites = "There are 2 sites in the Monash organisation, would you like to list all of them?"
+case1_success_5_sites = "There are 5 sites in the Monash organisation, would you like to list all of them?"
+
+case1_404 = "Error: Could not connect to Steelconnect"

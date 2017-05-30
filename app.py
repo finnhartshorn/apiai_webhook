@@ -37,7 +37,7 @@ def webhook():
             response = create_site(parameters)
         elif action_type == "CreateUplink":
             response = create_uplink(parameters)
-        elif action_type == "ListCites":
+        elif action_type == "ListSites":
             response = list_sites(parameters)
         # elsif action_type == "SomeOtherAction"            # Use elsif to add extra functionality
         else:
