@@ -17,10 +17,11 @@ class TestParseAction(unittest.TestCase):
     def test_create_site_run(self, create_site):
         create_site.return_value = "All is well"
         self.app.post("/webhook/", headers={'Content-Type': 'application/json'}, data=json.dumps(finland_helsinki_json_request))
-        create_site.assert_called_once()
+        self.assertTrue(create_site.called)
 
     @patch("app.list_sites")
     def test_list_sites_run(self, list_sites):
         list_sites.return_value = "All is well"
         self.app.post("/webhook/", headers={'Content-Type': 'application/json'}, data=json.dumps(case1_basic_request))
-        list_sites.assert_called_once()
+        self.assertTrue(list_sites.called)
+
