@@ -1,0 +1,14 @@
+language: python
+python:
+- '3.6'
+install: pip install -r requirements.txt
+script: pytest
+before_install:
+- openssl aes-256-cbc -K $encrypted_f392ad3b8eeb_key -iv $encrypted_f392ad3b8eeb_iv
+  -in SteelConnect\ API-AI-1ff9a92ca2fe.json.enc -out SteelConnect\ API-AI-1ff9a92ca2fe.json
+  -d
+deploy:
+  provider: gae
+  keyfile: SteelConnect\ API-AI-1ff9a92ca2fe.json
+  project: steelconnect-api-ai
+  default: true
