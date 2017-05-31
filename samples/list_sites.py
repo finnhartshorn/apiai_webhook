@@ -37,11 +37,11 @@ case1_basic_request = {
 }
 
 
-case1_success_0_sites_return = []
-case1_success_1_site_return = [{"name": "Berlin_Shop"}]
-case1_success_2_sites_return = [1, 2]
-case1_success_5_sites_return = [1, 2, 3, 4, 5]
-case1_404_return = []
+case1_success_0_sites_return = {"items":[]}
+case1_success_1_site_return = {"items":[{"name": "Berlin_Shop"}]}
+case1_success_2_sites_return = {"items":[1, 2]}                         # TODO: Use actual data
+case1_success_5_sites_return = {"items":[1, 2, 3, 4, 5]}
+case1_404_return = None
 
 case1_success_0_sites = "There are no sites in the Monash organisation"
 case1_success_1_site = "There is one site in the Monash organisation, it is called Berlin_Shop"

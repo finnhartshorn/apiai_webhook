@@ -16,12 +16,11 @@ def list_sites(parameters):
     # Get all sites and return a response based on the number of sites
     res = requests.get("https://monash.riverbed.cc/api/scm.config/1.0/org/org-Monash-d388075e40cf1bfd/sites",
                        auth=HTTPBasicAuth("Finn", "Kalapuikot"))
-    data = res.json()
-
-    num_sites = len(data)
-    speech = ""
 
     if res.status_code == 200:
+        data = res.json()["items"]
+        num_sites = len(data)
+
         if num_sites == 0:
             speech = "There are no sites in the {} organisation".format(org)
         elif num_sites == 1:
