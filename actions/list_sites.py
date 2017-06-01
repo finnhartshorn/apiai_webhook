@@ -6,7 +6,7 @@ import requests
 
 org = "Monash"
 
-def list_sites(parameters):
+def list_sites(api_auth, parameters):
     """
     :param parameters: json parameters from API.AI intent
     :type parameters: json
@@ -14,8 +14,7 @@ def list_sites(parameters):
     :rtype: string
     """
     # Get all sites and return a response based on the number of sites
-    res = requests.get("https://monash.riverbed.cc/api/scm.config/1.0/org/org-Monash-d388075e40cf1bfd/sites",
-                       auth=HTTPBasicAuth("Finn", "Kalapuikot"))
+    res = api_auth.list_sites()
 
     if res.status_code == 200:
         data = res.json()["items"]
