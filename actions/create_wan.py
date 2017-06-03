@@ -14,33 +14,16 @@ def create_wan(parameters):
     """
     try:
         wan = parameters["WAN"]
-        orgid = parameters["Organisation"]
+        site_type = parameters["SiteTypes"]
+        city = parameters["City"]
+        org = "Monash"
         
         # API Call Here
         url = 'https://monash.riverbed.cc/api/scm.config/1.0/org/org-Monash-d388075e40cf1bfd/wans'
         data = {
           "id": "",
-          "org": orgid,
-          "uplinks": [
-            ""
-          ],
-          "nets": [
-            ""
-          ],
-          "name": "",
-          "longname": "",
-          "uid": "",
-          "internet": true,
-          "sitelink": true,
-          "pingcheck_ips": "",
-          "dcuplink": [
-            ""
-          ],
-          "breakout": true,
-          "breakout_sites": [
-            ""
-          ],
-          "xfer_networks": "string"
+          "org": org,
+          "name": ""
         }
         request = json.dumps(data, indent=4)
         res = requests.post(url, data=request, auth=HTTPBasicAuth('Denver', 'Denver'))
@@ -48,7 +31,7 @@ def create_wan(parameters):
         # Ends Here
 
         if res.status_code == 200:
-            speech = "{} created in {}".format(wan.capitalize(), orgid)
+            speech = "{} created in {}".format(wan, city)
         elif res.status_code == 400:
             speech = "Invalid parameters: {}".format(res.json()["error"]["message"])
         elif res.status_code == 500:
