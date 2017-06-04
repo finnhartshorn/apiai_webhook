@@ -11,6 +11,7 @@ from actions.api import SteelConnectAPI
 from actions.create_uplink import create_uplink
 from actions.create_site import create_site
 from actions.list_sites import list_sites
+from actions.list_sites_followup import list_sites_followup
 
 app = Flask(__name__)
 
@@ -45,11 +46,16 @@ def webhook():
         return format_response("There was an error processing your request")
 
     if action_type == "CreateSite":
-        response = create_site(app.config['SC_API'], parameters)
+        response = create_site(app.config["SC_API"], parameters)
     elif action_type == "CreateUplink":
         response = create_uplink(parameters)
     elif action_type == "ListSites":
-        response = list_sites(app.config['SC_API'], parameters)
+        response = list_sites(app.config["SC_API"], parameters)
+    elif action_type == "ListSites.ListSites-custom":
+        response = list_sites_followup(app.config["SC_API"], parameters)
+    elif action_type == "ListSites.ListSites-yes":
+        parameters["position"] = "all"
+        response = list_sites_followup(app.config["SC_API"], parameters)
     # elif action_type == "SomeOtherAction"            # Use elif to add extra functionality
     else:
         response = "Error: This feature has not been implemented yet"
