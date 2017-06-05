@@ -36,9 +36,9 @@ req = {
     "action": "CreateUplink",
     "actionIncomplete": False,
     "parameters": {
-      "City": "",
-      "geo-city": "Geelong",
-      "SiteTypes": "branch",
+      "City": "Melbourne",
+      "geo-city": "",
+      "SiteTypes": "shop",
       "Uplinks": "uplink"
     },
     "contexts": [],
