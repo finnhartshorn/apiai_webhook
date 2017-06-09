@@ -10,6 +10,7 @@ import actions
 from actions.create_uplink import create_uplink
 from actions.create_site import create_site
 from actions.list_sites import list_sites
+from actions.create_wan import create_wan
 
 app = Flask(__name__)
 
@@ -34,6 +35,17 @@ def webhook():
         action_type = req["result"]["action"]
         intent_type = req["result"]["metadata"]["intentName"]
         parameters = req["result"]["parameters"]
+        if action_type == "CreateSite":
+            response = create_site(parameters)
+        elif action_type == "CreateUplink":
+            response = create_uplink(parameters)
+        elif action_type == "CreateWan":
+            response = create_wan(parameters)
+        # elsif action_type == "SomeOtherAction"            # Use elsif to add extra functionality
+        else:
+            response = "Error: This feature has not been implemented yet"
+            logging.error("Not implemented error action: {} intent: {}".format(action_type, intent_type))
+
     except KeyError as e:
         logging.error("Error processing request {}".format(e))
         return format_response("There was an error processing your request")
