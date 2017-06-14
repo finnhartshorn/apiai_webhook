@@ -16,13 +16,12 @@ def clear_sites(parameters):
 
         # First Get the list of sites
         url = 'https://monash.riverbed.cc/api/scm.config/1.0/org/org-Monash-d388075e40cf1bfd/sites'
-        request = json.dumps(data, indent=4)
-        data = requests.get(url, data=request, auth=HTTPBasicAuth('Shaylin', 'sche259'))
-        logging.debug(res)
+        res = requests.get(url, auth=HTTPBasicAuth('Shaylin', 'sche259'))
+        data = res.json()
 
-        # Then loop through them all and clear one by one
-        for site in data:
-            res = requests.delete(url, data=site, auth=HTTPBasicAuth('Shaylin', 'sche259'))
+        # Loop and delete
+        for site in data['items']:
+            res = requests.delete('https://monash.riverbed.cc/api/scm.config/1.0/site/'+site['id'], auth=HTTPBasicAuth('Shaylin', 'sche259'))
             logging.debug(res)
 
         if res.status_code == 200:
