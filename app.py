@@ -10,7 +10,6 @@ import actions
 from actions.create_uplink import create_uplink
 from actions.create_site import create_site
 from actions.list_sites import list_sites
-from actions.create_wan import create_wan
 
 app = Flask(__name__)
 
@@ -45,8 +44,6 @@ def webhook():
         response = create_uplink(parameters)
     elif action_type == "ListSites":
         response = list_sites(parameters)
-    elif action_type == "CreateWan":
-        response = create_wan(parameters)
     # elif action_type == "SomeOtherAction"            # Use elif to add extra functionality
     else:
         response = "Error: This feature has not been implemented yet"

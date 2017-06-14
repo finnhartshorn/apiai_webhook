@@ -5,8 +5,10 @@ from requests.auth import HTTPBasicAuth
 import requests
 
 
-def create_site(parameters):
+def create_site(api_auth, parameters):
     """
+    :param api_auth: steelconnect api object
+    :type api_auth: SteelConnectAPI
     :param parameters: json parameters from API.AI intent
     :type parameters: json
     :return: Returns a response to be read out to user
@@ -18,27 +20,6 @@ def create_site(parameters):
         country_code = parameters["Country"]["alpha-2"]
         country_name = parameters["Country"]["name"]
         name = city+"_"+site_type
-        
-        # API Call Here
-        url = 'https://monash.riverbed.cc/api/scm.config/1.0/org/org-Monash-d388075e40cf1bfd/sites'
-        data = {"id": "", "name": name, "org": "Monash", "longname": name, "uplinks": [""], "networks": [""], "street_address": "", "city": city, "country": country_code, "timezone": "", "size": 0, "uid": ""}
-        request = json.dumps(data, indent=4)
-        res = requests.post(url, data=request, auth=HTTPBasicAuth('Shaylin', 'sche259'))
-        logging.debug(res)
-        # Ends Here
-
-        if res.status_code == 200:
-            speech = "{} created in {}, {}".format(site_type.capitalize(), city, country_name)
-        elif res.status_code == 400:
-            speech = "Invalid parameters: {}".format(res.json()["error"]["message"])
-        elif res.status_code == 500:
-            speech = "Error: Could not create site"
-        else:
-            speech = "Error: Could not connect to Steelconnect"
-
-        logging.debug(speech)
-
-        return speech
 
     except KeyError as e:
 
@@ -48,4 +29,18 @@ def create_site(parameters):
 
         return error_string
 
-    
+    res = api_auth.create_site(name, city, country_code)
+
+    if res.status_code == 200:
+        speech = "{} created in {}, {}".format(site_type.capitalize(), city, country_name)
+    elif res.status_code == 400:
+        speech = "Invalid parameters: {}".format(res.json()["error"]["message"])
+    elif res.status_code == 500:
+        speech = "Error: Could not create site"
+    else:
+        speech = "Error: Could not connect to Steelconnect"
+
+    logging.debug(speech)
+
+    return speech
+
