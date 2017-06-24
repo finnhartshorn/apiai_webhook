@@ -61,7 +61,7 @@ finland_helsinki_parameters = {
 finland_helsinki_success_speech_response = "Shop created in Helsinki, Finland"
 finland_helsinki_400_speech_response = "Invalid parameters: Attribute 'name' must be unique"
 finland_helsinki_400_api_response = {"error": {"message": "Attribute 'name' must be unique", "code": 400}}
-finland_helsinki_500_speech_response = "Error: Could not create site"
+finland_helsinki_500_speech_response = "Error: Could not create uplink"
 finland_helsinki_500_api_response = json.dumps({"error": {"message": "Error creating site", "code": 500}})
 finland_helsinki_404_speech_response = "Error: Could not connect to Steelconnect"
 

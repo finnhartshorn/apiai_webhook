@@ -32,3 +32,16 @@ class SteelConnectAPI:
         data = self.format_data(data)
         return requests.post(url, data=data, auth=self.auth)
 
+    def create_uplink(self, site, uplink):
+        url = self.org_url() + "sites"
+        data = {
+            "id": "",
+            "site": site,
+            "wan": "wan-Internet-0ee899d81ec323a4",
+            "org": "Monash",
+            "name": uplink,
+        }
+        # post uplink
+        data = self.format_data(data)
+        return requests.post(url, data=data, auth=self.auth)
+
