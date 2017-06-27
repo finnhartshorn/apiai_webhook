@@ -26,6 +26,7 @@ class SteelConnectAPI:
 
     def create_site(self, name, city, country_code):
         url = self.org_url() + "sites"
+        print(url)
         # data = {"id": "", "name": name, "org": "Monash", "longname": name, "uplinks": [""], "networks": [""],
         #         "street_address": "", "city": city, "country": country_code, "timezone": "", "size": 0, "uid": ""}
         data = {"name": name, "longname": name, "city": city, "country": country_code}
@@ -33,12 +34,12 @@ class SteelConnectAPI:
         return requests.post(url, data=data, auth=self.auth)
 
     def create_uplink(self, site, uplink):
-        url = self.org_url() + "sites"
+        url = self.org_url() + "uplinks"
         data = {
             "id": "",
             "site": site,
             "wan": "wan-Internet-0ee899d81ec323a4",
-            "org": "Monash",
+            "org": self.org_id,
             "name": uplink,
         }
         # post uplink

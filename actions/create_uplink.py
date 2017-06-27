@@ -6,6 +6,8 @@ import requests
 
 def create_uplink(api_auth, parameters):
     """
+    :param api_auth: steelconnect api object
+    :type api_auth: SteelConnectAPI
     :param parameters: json parameters from API.AI intent
     :type parameters: json
     :return: Returns a response to be read out to user
@@ -28,13 +30,13 @@ def create_uplink(api_auth, parameters):
     res = api_auth.list_sites()
     data= res.json()
     site = ""
-    for  item in data['items']:
-        if (city+site_type in item['id']):
-            site = item['id']
+    for  item in data["items"]:
+        if (city+site_type in item["id"]):
+            site = item["id"]
+            break
 
     if (site != ""):
         res = api_auth.create_uplink(site, uplink_name)
-        logging.debug(res)
 
         if res.status_code == 200:
             speech = "An uplink had created in site {}_{}".format(city, site_type)
@@ -44,10 +46,11 @@ def create_uplink(api_auth, parameters):
             speech = "Error: Could not create uplink"
         else:
             speech = "Error: Could not connect to Steelconnect"
-
-        logging.debug(speech)
     else:
         speech = "Invalid site {}_{}".format(city, site_type)
+
+    logging.debug(speech)
+
     return speech
 
 
