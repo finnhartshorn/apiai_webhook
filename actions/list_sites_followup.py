@@ -34,13 +34,18 @@ def list_sites_followup(api_auth, parameters):
         data = res.json()["items"]
         num_sites = len(data)
 
-        try:
-            number = parameters["number"]
-            position = parameters["position"]
-        except KeyError as e:
-            logging.error("Error processing list_sites_followup intent. {0}".format(e))
+        if parameters:
+            try:
+                number = parameters["number"]
+                position = parameters["position"]
+            except KeyError as e:
+                logging.error("Error processing list_sites_followup intent. {0}".format(e))
 
-            return "There was an error fulfilling your request"
+                return "There was an error fulfilling your request"
+        else:
+            number = num_sites
+            position = "all"
+
         speech = ""
 
         if number > num_sites:

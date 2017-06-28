@@ -57,7 +57,7 @@ def webhook():
         response = list_sites_followup(app.config["SC_API"], parameters)
     elif action_type == "ListSites.ListSites-yes":
         parameters["position"] = "all"
-        response = list_sites_followup(app.config["SC_API"], parameters)
+        response = list_sites_followup(app.config["SC_API"], None)
     elif action_type == "CreateWan":
         response = create_wan(parameters)
     elif action_type == "ClearSites":
