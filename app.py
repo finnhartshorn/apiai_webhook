@@ -54,7 +54,7 @@ def webhook():
     elif action_type == "ListSites":
         response = list_sites(app.config["SC_API"], parameters)
     elif action_type == "ListSites.ListSites-custom":
-        response = list_sites_followup(app.config["SC_API"], parameters)
+        response = list_sites_followup(app.config["SC_API"], req["result"]["contexts"][0]["parameters"])
     elif action_type == "ListSites.ListSites-yes":
         parameters["position"] = "all"
         response = list_sites_followup(app.config["SC_API"], None)
