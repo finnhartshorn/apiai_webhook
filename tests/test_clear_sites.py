@@ -30,7 +30,7 @@ class TestClearSites(unittest.TestCase):
         mock_api.create_site.return_value = MagicMock(spec=requests.Response, status_code=200)
         result = app.create_site(mock_api, finland_helsinki_parameters)
         self.assertTrue(mock_api.create_site.called)
-        self.assertEqual(finland_helsinki_success_speech_response, result)
+        self.assertEqual(result)
         result = app.clear_sites(mock_api)
         #self.assertEqual(, result)
 
