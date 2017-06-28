@@ -36,7 +36,7 @@ def list_sites_followup(api_auth, parameters):
 
         if parameters:
             try:
-                number = parameters["number"]
+                number = int(parameters["number"])
                 position = parameters["position"]
             except KeyError as e:
                 logging.error("Error processing list_sites_followup intent. {0}".format(e))
