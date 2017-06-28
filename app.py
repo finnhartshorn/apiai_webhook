@@ -1,18 +1,26 @@
-from __future__ import print_function
-from future.standard_library import install_aliases
-install_aliases()
+# from __future__ import print_function
+# from future.standard_library import install_aliases
+# install_aliases()
 
 from flask import Flask, request, make_response
 import json
 import logging
 
-import actions
+from actions.api import SteelConnectAPI
+
 from actions.create_uplink import create_uplink
 from actions.create_site import create_site
 from actions.list_sites import list_sites
+from actions.list_sites_followup import list_sites_followup
+from actions.create_wan import create_wan
 
 app = Flask(__name__)
 
+
+# Setup up api authentication
+app.config["SC_API"]  = SteelConnectAPI("Finn", "Kalapuikot", "monash.riverbed.cc", "org-Monash-d388075e40cf1bfd")
+
+# from apiai_webhook import app
 
 @app.route('/')
 def home():
@@ -39,11 +47,20 @@ def webhook():
         return format_response("There was an error processing your request")
 
     if action_type == "CreateSite":
-        response = create_site(parameters)
+        response = create_site(app.config["SC_API"], parameters)
     elif action_type == "CreateUplink":
         response = create_uplink(parameters)
     elif action_type == "ListSites":
-        response = list_sites(parameters)
+        response = list_sites(app.config["SC_API"], parameters)
+    elif action_type == "ListSites.ListSites-custom":
+        response = list_sites_followup(app.config["SC_API"], parameters)
+    elif action_type == "ListSites.ListSites-yes":
+        parameters["position"] = "all"
+        response = list_sites_followup(app.config["SC_API"], parameters)
+    elif action_type == "CreateWan":
+        response = create_wan(parameters)
+
+
     # elif action_type == "SomeOtherAction"            # Use elif to add extra functionality
     else:
         response = "Error: This feature has not been implemented yet"
