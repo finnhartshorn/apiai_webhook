@@ -24,6 +24,10 @@ class SteelConnectAPI:
         url = self.org_url() + "sites"
         return requests.get(url, auth=self.auth)
 
+    def list_wans(self):
+        url = self.org_url() + "wans"
+        return requests.get(url, auth=self.auth)
+
     def create_site(self, name, city, country_code):
         url = self.org_url() + "sites"
         print(url)
@@ -33,12 +37,12 @@ class SteelConnectAPI:
         data = self.format_data(data)
         return requests.post(url, data=data, auth=self.auth)
 
-    def create_uplink(self, site, uplink):
+    def create_uplink(self, site, uplink, wan):
         url = self.org_url() + "uplinks"
         data = {
             "id": "",
             "site": site,
-            "wan": "wan-Internet-0ee899d81ec323a4",
+            "wan": wan,
             "org": self.org_id,
             "name": uplink,
         }
