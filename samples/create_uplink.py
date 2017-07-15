@@ -50,6 +50,7 @@ melbourne_shop_parameters = {
       "Wans": "RouteVPN"
 }
 
+#invalid site parameters
 tokyo_branch_parameters = {
   "id": "46897f02-20ab-4af6-9539-798f4a252185",
   "timestamp": "2017-07-10T07:01:02.177Z",
@@ -93,6 +94,7 @@ tokyo_branch_parameters = {
   "sessionId": "e9314ec4-1ba3-4bed-a376-ddb9711dc17f"
 }
 
+#invalid wan parameters
 hahawan_parameters = {
   "id": "46897f02-20ab-4af6-9539-798f4a252185",
   "timestamp": "2017-07-10T07:01:02.177Z",

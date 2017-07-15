@@ -56,7 +56,7 @@ def create_uplink(api_auth, parameters):
             res = api_auth.create_uplink(site, uplink_name, wan)
 
             if res.status_code == 200:
-                speech = "An uplink called {} had created in site {}_{} to {}".format(uplink_name, city, site_type, wan_name)
+                speech = "An uplink called {} had created in site {}_{} to {} wan".format(uplink_name, city, site_type, wan_name)
             elif res.status_code == 400:
                 speech = "Invalid parameters: {}".format(res.json()["error"]["message"])
             elif res.status_code == 500:
