@@ -49,14 +49,10 @@ class TestCreateUplinks(unittest.TestCase):
         mock_api = SteelConnectAPI("Aubrey", "Aubrey", 'monash.riverbed.cc', 'org-Monash-d388075e40cf1bfd')
         mock_api.create_uplink = MagicMock(name="create_uplink")
         result = app.create_uplink(mock_api, tokyo_branch_parameters)
-        mock_api.create_uplink.return_value = MagicMock(invalid_site_speech_response)
-        self.assertTrue(mock_api.create_uplink.called)
         self.assertEqual(invalid_site_speech_response, result)
 
     def test_invalid_wan(self):
         mock_api = SteelConnectAPI("Aubrey", "Aubrey", 'monash.riverbed.cc', 'org-Monash-d388075e40cf1bfd')
         mock_api.create_uplink = MagicMock(name="create_uplink")
         result = app.create_uplink(mock_api, hahawan_parameters)
-        mock_api.create_uplink.return_value = MagicMock(invalid_wan_speech_response)
-        self.assertTrue(mock_api.create_uplink.called)
         self.assertEqual(invalid_wan_speech_response, result)
