@@ -30,9 +30,6 @@ class SteelConnectAPI:
 
     def create_site(self, name, city, country_code):
         url = self.org_url() + "sites"
-        print(url)
-        # data = {"id": "", "name": name, "org": "Monash", "longname": name, "uplinks": [""], "networks": [""],
-        #         "street_address": "", "city": city, "country": country_code, "timezone": "", "size": 0, "uid": ""}
         data = {"name": name, "longname": name, "city": city, "country": country_code}
         data = self.format_data(data)
         return requests.post(url, data=data, auth=self.auth)
@@ -50,3 +47,8 @@ class SteelConnectAPI:
         data = self.format_data(data)
         return requests.post(url, data=data, auth=self.auth)
 
+    def create_WAN(self, name):
+        url = self.org_url() + "wans"
+        data = {"name": name}
+        data = self.format_data(data)
+        return requests.post(url, data=data, auth=self.auth)

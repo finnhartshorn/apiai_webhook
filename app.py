@@ -13,6 +13,7 @@ from actions.create_site import create_site
 from actions.list_sites import list_sites
 from actions.list_sites_followup import list_sites_followup
 from actions.create_wan import create_wan
+from actions.create_WAN import create_WAN
 from actions.clear_sites import clear_sites
 
 app = Flask(__name__)
