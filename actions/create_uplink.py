@@ -41,6 +41,8 @@ def create_uplink(api_auth, parameters):
     default_wan = ""
     wan = ""
     for item in data_wans["items"]:
+        print(item['name'])
+        print(wan_name)
         if ("Internet"  == item["name"]):
             default_wan = item["id"]
         if (wan_name  == item["name"]):
