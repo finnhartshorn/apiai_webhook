@@ -18,6 +18,7 @@ class TestCreateUplinks(unittest.TestCase):
         mock_api = MagicMock()
         #mock_api.create_uplink = MagicMock(name="create_uplink")
         mock_api.create_uplink.return_value = MagicMock(spec=requests.Response, status_code=200)
+        mock_api.create_uplink.return_value.json.return_value = melbourne_shop_success_speech_response
         result = app.create_uplink(mock_api, melbourne_shop_parameters)
         #self.assertTrue(mock_api.create_uplink.called)
         self.assertEqual(melbourne_shop_success_speech_response, result)
@@ -35,6 +36,7 @@ class TestCreateUplinks(unittest.TestCase):
         mock_api =  MagicMock()
         #mock_api.create_uplink = MagicMock(name="create_uplink")
         mock_api.create_uplink.return_value = MagicMock(spec=requests.Response, status_code=500)
+        mock_api.create_uplink.return_value.json.return_value = melbourne_shop_500_speech_response
         result = app.create_uplink(mock_api, melbourne_shop_parameters)
         #self.assertTrue(mock_api.create_uplink.called)
         self.assertEqual(melbourne_shop_500_speech_response, result)
@@ -43,6 +45,7 @@ class TestCreateUplinks(unittest.TestCase):
         mock_api = MagicMock()
         #mock_api.create_uplink = MagicMock(name="create_uplink")
         mock_api.create_uplink.return_value = MagicMock(spec=requests.Response, status_code=404)
+        mock_api.create_uplink.return_value.json.return_value = melbourne_shop_404_speech_response
         result = app.create_uplink(mock_api, melbourne_shop_parameters)
         #self.assertTrue(mock_api.create_uplink.called)
         self.assertEqual(melbourne_shop_404_speech_response, result)
