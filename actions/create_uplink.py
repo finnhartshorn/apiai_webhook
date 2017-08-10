@@ -20,17 +20,14 @@ def create_uplink(api_auth, parameters):
         wan_name = parameters["Wans"]
 
     except KeyError as e:
-
         error_string = "Error processing createUplink intent. {0}".format(e)
-
         logging.error(error_string)
-
         return error_string
 
     # Get all the sites and check whether there is a site match given city and site type
     data_sites = api_auth.list_sites().json()
     print(data_sites)
-    site = ""
+    site = " "
     for  item in data_sites["items"]:
         if (city+site_type in item["id"]):
             site = item["id"]
@@ -38,40 +35,27 @@ def create_uplink(api_auth, parameters):
 
     # Get all the wans and check whether there is a wan match target wan user want the uplink to be created on
     data_wans = api_auth.list_wans().json()
-    default_wan = ""
-    wan = ""
+    wan = " "
     for item in data_wans["items"]:
-        print(item['name'])
-        print(wan_name)
-        if ("Internet"  == item["name"]):
-            default_wan = item["id"]
         if (wan_name  == item["name"]):
             wan = item["id"]
             break
-    #if the user doesn't specify a wan, use default wan internet
-    if (wan_name == ""):
-        wan = default_wan
-        wan_name = "Internet"
 
-    if (wan != ""):
-        if (site != ""):
-            res = api_auth.create_uplink(site, uplink_name, wan)
+    #calle create uplink api
+    res = api_auth.create_uplink(site, uplink_name, wan)
 
-            if res.status_code == 200:
-                speech = "An uplink called {} had created in site {}_{} to {} wan".format(uplink_name, city, site_type, wan_name)
-            elif res.status_code == 400:
-                speech = "Invalid parameters: {}".format(res.json()["error"]["message"])
-            elif res.status_code == 500:
-                speech = "Error: Could not create uplink"
-            else:
-                speech = "Error: Could not connect to Steelconnect"
-        else:
-            speech = "Invalid site {}_{}".format(city, site_type)
+    if res.status_code == 200:
+        speech = "An uplink called {} had created in site {}_{} to {} wan".format(uplink_name, city, site_type, wan_name)
+    elif res.status_code == 400:
+        speech = "Invalid parameters: {}".format(res.json()["error"]["message"])
+    elif res.status_code == 500:
+        speech = "Error: Could not create uplink"
     else:
-        speech = "Invalid wan {}".format(wan_name)
+        speech = "Error: Could not connect to Steelconnect"
 
     logging.debug(speech)
     print(speech)
+    print(res.status_code)
     return speech
 
 
