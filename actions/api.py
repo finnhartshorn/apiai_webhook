@@ -52,3 +52,13 @@ class SteelConnectAPI:
         data = {"name": name}
         data = self.format_data(data)
         return requests.post(url, data=data, auth=self.auth)
+
+    def create_zone(self, name, site):
+        url = self.org_url() + "zones"
+        data = {
+            "id": "",
+            "name": name,
+            "site": site
+        }
+        data = self.format_data(data)
+        return requests.post(url, data=data, auth=self.auth)

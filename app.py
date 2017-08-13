@@ -15,6 +15,7 @@ from actions.list_sites_followup import list_sites_followup
 from actions.create_wan import create_wan
 from actions.create_WAN import create_WAN
 from actions.clear_sites import clear_sites
+from actions.create_zone import create_zone
 
 app = Flask(__name__)
 
@@ -63,6 +64,8 @@ def webhook():
         response = create_wan(parameters)
     elif action_type == "ClearSites":
         response = clear_sites(parameters)
+    elif action_type == "CreateZone":
+        response = create_zone(app.config["SC_API"], parameters)
 
 
     # elif action_type == "SomeOtherAction"            # Use elif to add extra functionality
