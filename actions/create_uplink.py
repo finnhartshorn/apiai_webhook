@@ -4,6 +4,7 @@ from flask import json
 from requests.auth import HTTPBasicAuth
 import requests
 
+
 def create_uplink(api_auth, parameters):
     """
     :param api_auth: steelconnect api object
@@ -28,8 +29,8 @@ def create_uplink(api_auth, parameters):
     data_sites = api_auth.list_sites().json()
     print(data_sites)
     site = " "
-    for  item in data_sites["items"]:
-        if (city+site_type in item["id"]):
+    for item in data_sites["items"]:
+        if city + site_type in item["id"]:
             site = item["id"]
             break
 
@@ -37,15 +38,16 @@ def create_uplink(api_auth, parameters):
     data_wans = api_auth.list_wans().json()
     wan = " "
     for item in data_wans["items"]:
-        if (wan_name  == item["name"]):
+        if wan_name == item["name"]:
             wan = item["id"]
             break
 
-    #calle create uplink api
+    # call create uplink api
     res = api_auth.create_uplink(site, uplink_name, wan)
 
     if res.status_code == 200:
-        speech = "An uplink called {} had created in site {}_{} to {} wan".format(uplink_name, city, site_type, wan_name)
+        speech = "An uplink called {} had created in site {}_{} to {} wan".format(uplink_name, city, site_type,
+                                                                                  wan_name)
     elif res.status_code == 400:
         speech = "Invalid parameters: {}".format(res.json()["error"]["message"])
     elif res.status_code == 500:
@@ -57,6 +59,3 @@ def create_uplink(api_auth, parameters):
     print(speech)
     print(res.status_code)
     return speech
-
-
-
