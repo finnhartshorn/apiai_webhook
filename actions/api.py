@@ -39,6 +39,10 @@ class SteelConnectAPI:
         url = self.org_url() + "wans"
         return requests.get(url, auth=self.auth)
 
+    def list_zones(self):
+        url = self.org_url() + "zones"
+        return requests.get(url, auth=self.auth)
+
     def create_site(self, name, city, country_code):
         url = self.org_url() + "sites"
         data = {"name": name, "longname": name, "city": city, "country": country_code}

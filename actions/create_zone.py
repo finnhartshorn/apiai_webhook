@@ -3,6 +3,7 @@ import logging
 from flask import json
 from requests.auth import HTTPBasicAuth
 import requests
+import app
 
 
 def create_zone(api_auth, parameters):
@@ -15,8 +16,8 @@ def create_zone(api_auth, parameters):
     :rtype: string
     """
     try:
-        name = parameters["name"]
-        site_name = parameters["site"]
+        city = parameters["City"]
+        site_type = parameters["SiteTypes"]
 
     except KeyError as e:
         error_string = "Error processing create Zone intent. {0}".format(e)
@@ -26,18 +27,28 @@ def create_zone(api_auth, parameters):
     # Get all sites and check whether site exists
     data_sites = api_auth.list_sites().json()
     site = ""
-    for item in data_sites['items']:
-        if site_name in item['name']:
-            site = item['id']
+    for item in data_sites["items"]:
+        if city + site_type in item["id"]:
+            site = item["id"]
             break
-
     if site != "":
+
+        # Get all Zones and generate a new zone number
+        data_zones = api_auth.list_zones().json()
+        zone = 1
+        for item in data_zones["items"]:
+            if "Zone_" in item["name"]:
+                chk = item["name"]
+                if chk[5:].isdigit():
+                    if int(chk[5:]) >= zone:
+                        zone = int(chk[5:]) + 1
+        name = "Zone_" + str(zone)
 
         # Call create_zone in SteelConnectAPI
         res = api_auth.create_zone(name=name, site=site)
 
         if res.status_code == 200:
-            speech = "Zone: {} created for site: {}".format(name, site_name)
+            speech = "Zone: {} created for site: {}, {}".format(name, city, site_type)
         elif res.status_code == 400:
             speech = "Invalid parameters: {}".format(res.json()["error"]["message"])
         elif res.status_code == 500:
@@ -47,5 +58,12 @@ def create_zone(api_auth, parameters):
 
         logging.debug(speech)
     else:
-        speech = "Invalid site {}".format(site_name)
+        speech = "Invalid site {}, {}".format(city, site_type)
     return speech
+
+auth = app.SteelConnectAPI("Finn", "Kalapuikot", "monash.riverbed.cc", "org-Monash-d388075e40cf1bfd")
+param = {
+    "City": "Bendigo",
+    "SiteTypes": "site"
+}
+create_zone(api_auth=auth, parameters=param)
