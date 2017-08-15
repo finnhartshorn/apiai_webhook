@@ -13,3 +13,6 @@ deploy:
   keyfile: SteelConnect\ API-AI-1ff9a92ca2fe.json
   project: steelconnect-api-ai
   default: true
+  on:
+    branch: master
+    python: '2.7'
