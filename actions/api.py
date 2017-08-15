@@ -1,7 +1,10 @@
 import requests
 from requests.auth import HTTPBasicAuth
+import requests_toolbelt.adapters.appengine
 
 from flask import json
+
+requests_toolbelt.adapters.appengine.monkeypatch()
 
 
 class SteelConnectAPI:

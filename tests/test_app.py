@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import patch, MagicMock
+from mock import patch, MagicMock
 import requests
 import app
 import actions
