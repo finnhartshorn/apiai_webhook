@@ -20,6 +20,14 @@ class SteelConnectAPI:
     def format_data(data):
         return json.dumps(data, indent=4)
 
+    @staticmethod
+    def find_context_by_name(contexts, name):
+        for context in contexts:
+            if context["name"] == name:
+                return context
+        else:
+            return None
+
     def org_url(self):
         return SteelConnectAPI.api_url.format(self.base_url) + "org/{}/".format(self.org_id)
 

@@ -1,15 +1,14 @@
 import logging
 
 from flask import json
-from requests.auth import HTTPBasicAuth
-import requests
-
 
 def create_WAN(api_auth, parameters, contexts):
     """
     :param api_auth: steelconnect api object
     :type api_auth: SteelConnectAPI
     :param parameters: json parameters from API.AI intent
+    :type parameters: json
+    :param contexts: json contexts from API.AI intent
     :type parameters: json
     :return: Returns a response to be read out to user
     :rtype: string
@@ -20,7 +19,7 @@ def create_WAN(api_auth, parameters, contexts):
 
     except KeyError as e:
 
-        error_string = "Error processing createSite intent. {0}".format(e)
+        error_string = "Error processing createWAN intent. {0}".format(e)
 
         logging.error(error_string)
 
