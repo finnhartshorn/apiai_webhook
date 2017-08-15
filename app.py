@@ -14,6 +14,7 @@ from actions.list_sites import list_sites
 from actions.list_sites_followup import list_sites_followup
 from actions.create_wan import create_wan
 from actions.create_WAN import create_WAN
+from actions.add_site_to_wan import add_site_to_WAN
 from actions.clear_sites import clear_sites
 from actions.create_zone import create_zone
 
@@ -45,6 +46,7 @@ def webhook():
         action_type = req["result"]["action"]
         intent_type = req["result"]["metadata"]["intentName"]
         parameters = req["result"]["parameters"]
+        contexts = req["result"]["contexts"]
     except KeyError as e:
         logging.error("Error processing request {}".format(e))
         return format_response("There was an error processing your request")
@@ -62,6 +64,10 @@ def webhook():
         response = list_sites_followup(app.config["SC_API"], None)
     elif action_type == "CreateWan":
         response = create_wan(parameters)
+    elif action_type == "CreateWAN":
+        response = create_WAN(app.config["SC_API"], parameters, contexts)
+    elif action_type == "AddSiteToWAN":
+        response = add_site_to_WAN(app.config["SC_API"], parameters, contexts)
     elif action_type == "ClearSites":
         response = clear_sites(parameters)
     elif action_type == "CreateZone":
