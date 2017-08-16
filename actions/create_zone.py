@@ -3,7 +3,6 @@ import logging
 from flask import json
 from requests.auth import HTTPBasicAuth
 import requests
-import app
 
 
 def create_zone(api_auth, parameters):
@@ -61,9 +60,9 @@ def create_zone(api_auth, parameters):
         speech = "Invalid site {}, {}".format(city, site_type)
     return speech
 
-auth = app.SteelConnectAPI("Finn", "Kalapuikot", "monash.riverbed.cc", "org-Monash-d388075e40cf1bfd")
-param = {
-    "City": "Bendigo",
-    "SiteTypes": "site"
-}
-create_zone(api_auth=auth, parameters=param)
+# auth = app.SteelConnectAPI("Finn", "Kalapuikot", "monash.riverbed.cc", "org-Monash-d388075e40cf1bfd")
+# param = {
+#     "City": "Bendigo",
+#     "SiteTypes": "site"
+# }
+# create_zone(api_auth=auth, parameters=param)
