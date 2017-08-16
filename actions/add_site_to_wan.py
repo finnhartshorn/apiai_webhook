@@ -19,7 +19,7 @@ def add_site_to_WAN(api_auth, parameters, contexts):
         wan_context = api_auth.find_context_by_name(contexts, "wan_created")["parameters"]
         site_context = api_auth.find_context_by_name(contexts, "sitecreated")["parameters"]
 
-        new_parameters = {"SiteTypes": site_context["SiteTypes"],
+        new_parameters = {"SiteTypes": site_context["SiteType"],
                           "City": site_context["City"],
                           "Wans": wan_context["WANType"],
                           "Uplinks": ""}
