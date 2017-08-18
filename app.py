@@ -20,15 +20,17 @@ from actions.create_zone import create_zone
 
 app = Flask(__name__)
 
+from views import index
+
 
 # Setup up api authentication
 app.config["SC_API"]  = SteelConnectAPI("Finn", "Kalapuikot", "monash.riverbed.cc", "org-Monash-d388075e40cf1bfd")
 
 # from apiai_webhook import app
 
-@app.route('/')
-def home():
-    return "This app works"
+# @app.route('/')
+# def home():
+#     return "This app works"
 
 
 @app.route('/webhook/', methods=['POST'])
