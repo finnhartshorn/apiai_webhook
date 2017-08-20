@@ -4,7 +4,7 @@ from mock import patch, MagicMock
 import requests
 import app
 
-from samples.create_WAN import *
+from samples.create_WAN_new import *
 
 class TestSuccessfulCreateWan(unittest.TestCase):
     def setUp(self):

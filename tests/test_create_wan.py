@@ -51,4 +51,3 @@ class TestSuccessfulCreateWan(unittest.TestCase):
         result = app.create_wan(denver_shop_wan_parameters)
         self.assertTrue(mock_post.called)
         self.assertEqual(denver_shop_wan_404_speech_response, result)
-
