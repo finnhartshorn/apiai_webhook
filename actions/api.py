@@ -77,3 +77,12 @@ class SteelConnectAPI:
         }
         data = self.format_data(data)
         return requests.post(url, data=data, auth=self.auth)
+
+    def create_appliance(self, model, site):
+        url = self.org_url() + "node/virtual/register"
+        data = {
+            "site": site,
+            "model": model
+        }
+        data = self.format_data(data)
+        return requests.post(url, data=data, auth=self.auth)
