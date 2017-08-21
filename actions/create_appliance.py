@@ -32,15 +32,20 @@ def create_appliance(api_auth, parameters):
         if city + site_type in item["id"]:
             site = item["id"]
             break
+
+    # nodes = api_auth.list_nodes().json()
+    # print(nodes)
     if site != "":
 
-        # Call create_zone in SteelConnectAPI
+        # Call create_appliance in SteelConnectAPI
         res = api_auth.create_appliance(site=site, model=model)
 
         if res.status_code == 200:
-            speech = "Appliance: {} created for site: {}, {}".format(city, site_type)
+            speech = "Appliance: {} created for site: {}, {}".format(model, city, site_type)
         elif res.status_code == 400:
             speech = "Invalid parameters: {}".format(res.json()["error"]["message"])
+        elif res.status_code == 404:
+            speech = "Error: Organization with given id does not exist"
         elif res.status_code == 500:
             speech = "Error: Could not create Appliance"
         else:
@@ -54,7 +59,9 @@ def create_appliance(api_auth, parameters):
 # auth = app.SteelConnectAPI("Anthony", "Anthony", "monash.riverbed.cc", "org-Monash-d388075e40cf1bfd")
 # param = {
 #     "City": "Bendigo",
-#     "SiteTypes": "site",
-#     "Model": "SDI-S12 Switch"
+#     "SiteTypes": "shop",
+#     "Model": "panda"
 # }
 # create_appliance(api_auth=auth, parameters=param)
+
+# List of models: raccoon, koala, ursus, panda, ewok, grizzly, panther, cx570, cx770, cx3070, aardvark, sloth, kodiak
