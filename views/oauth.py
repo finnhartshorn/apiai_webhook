@@ -25,7 +25,7 @@ def index():
         if me.status == 401:
             return redirect(url_for('logout'))
         elif me.status == 200:
-            return redirect(url_for('display_offerings'))
+            return redirect(url_for('org_form'))
         else:
             print(me.status)
             return me.data
@@ -45,7 +45,7 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route('/login/authorized')
+@app.route('/login/authorized/')
 def authorized():
     resp = google.authorized_response()
     if resp is None:
@@ -62,4 +62,3 @@ def authorized():
 @google.tokengetter
 def get_google_oauth_token():
     return session.get('google_token')
-

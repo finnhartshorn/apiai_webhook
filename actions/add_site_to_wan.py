@@ -1,8 +1,7 @@
 import logging
 
 from flask import json
-from app import create_uplink
-
+from actions import create_uplink
 
 def add_site_to_WAN(api_auth, parameters, contexts):
     """

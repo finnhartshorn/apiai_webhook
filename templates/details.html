@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{%  block content %}
+    <h1>Organisation Details</h1>
+    <form action="" method="post" name="organisation">
+        <p>
+            Organisation ID:<br>
+            {{  form.org_id(size=80) }}
+            {% for error in form.org_id.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}<br>
+        </p>
+        <p>
+            Organisation Name:<br>
+            {{  form.org_name(size=80) }}
+            {% for error in form.org_name.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}<br>
+        </p>
+        <p><input type="submit" value="Submit"></p>
+    </form>
+{% endblock %}

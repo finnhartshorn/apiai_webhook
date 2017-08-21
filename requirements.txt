@@ -1,4 +1,5 @@
 Flask==0.12.2
-Flask-OAuthLib==0.9.3"
+Flask-OAuthLib==0.9.3
+WTForms==2.1
 requests==2.13.0
 requests-toolbelt==0.8.0
