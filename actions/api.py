@@ -4,7 +4,7 @@ import requests_toolbelt.adapters.appengine
 
 from flask import json
 
-requests_toolbelt.adapters.appengine.monkeypatch()
+# requests_toolbelt.adapters.appengine.monkeypatch()
 
 
 class SteelConnectAPI:
@@ -43,6 +43,10 @@ class SteelConnectAPI:
         url = self.org_url() + "zones"
         return requests.get(url, auth=self.auth)
 
+    def list_nodes(self):
+        url = self.org_url() + "nodes"
+        return requests.get(url, auth=self.auth)
+
     def create_site(self, name, city, country_code):
         url = self.org_url() + "sites"
         data = {"name": name, "longname": name, "city": city, "country": country_code}
@@ -74,6 +78,15 @@ class SteelConnectAPI:
             "id": "",
             "name": name,
             "site": site
+        }
+        data = self.format_data(data)
+        return requests.post(url, data=data, auth=self.auth)
+
+    def create_appliance(self, model, site):
+        url = self.org_url() + "node/virtual/register"
+        data = {
+            "site": site,
+            "model": model
         }
         data = self.format_data(data)
         return requests.post(url, data=data, auth=self.auth)
