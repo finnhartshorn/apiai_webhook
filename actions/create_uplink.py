@@ -26,6 +26,8 @@ def create_uplink(api_auth, parameters):
         return error_string
 
     # Get all the sites and check whether there is a site match given city and site type
+    if uplink_name == "":
+        uplink_name = "Uplink";
     data_sites = api_auth.list_sites().json()
     print(data_sites)
     site = " "
