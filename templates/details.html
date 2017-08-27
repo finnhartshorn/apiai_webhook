@@ -3,6 +3,7 @@
 {%  block content %}
     <h1>Organisation Details</h1>
     <form action="" method="post" name="organisation">
+        {{ form.hidden_tag() }}
         <p>
             Organisation ID:<br>
             {{  form.org_id(size=80) }}
