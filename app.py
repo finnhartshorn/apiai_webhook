@@ -23,9 +23,15 @@ app = Flask(__name__)
 
 
 # Setup up api authentication
-app.config["SC_API"]  = SteelConnectAPI("Finn", "Kalapuikot", "monash.riverbed.cc", "org-Monash-d388075e40cf1bfd")
+try:
+    with open("./default-auth.json") as file:
+        j = json.load(file)
 
-# from apiai_webhook import app
+        app.config["SC_API"] = SteelConnectAPI(j["username"], j["password"], j["realm-url"], j["org-id"])
+except IOError:
+    j = None
+    app.config["SC_API"] = None
+
 
 @app.route('/')
 def home():
