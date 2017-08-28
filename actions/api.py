@@ -6,13 +6,31 @@ from flask import json
 
 requests_toolbelt.adapters.appengine.monkeypatch()
 
+class SteelConnectAuthFactory:
+
+    def __init__(self, username, password, base_url, org_id):
+        default_auth = HTTPBasicAuth(username, password)
+        base_url = base_url
+        org_id = org_id
+        self.auth_store = {"default" : {"auth": default_auth, "base_url": base_url, "org_id": org_id}}
+
+    def add_auth(self, google_email, org_id, sc_url, sc_username, sc_password):
+        self.auth_store[google_email] =  {"org_id": org_id, "base_url": sc_url, "auth": HTTPBasicAuth(sc_username, sc_password)}
+
+    def make_auth(self, email=None):
+        auth_details = self.auth_store["default"]
+        if email:
+            auth_details = self.auth_store[email]
+        return SteelConnectAPI(auth_details["auth"], auth_details["base_url"], auth_details["org_id"])
+
+
 
 class SteelConnectAPI:
 
     api_url = "https://{}/api/scm.config/1.0/"
 
-    def __init__(self, username, password, base_url, org_id):
-        self.auth = HTTPBasicAuth(username, password)
+    def __init__(self, auth, base_url, org_id):
+        self.auth = auth
         self.base_url = base_url
         self.org_id = org_id
 

@@ -19,15 +19,17 @@ from actions.clear_sites import clear_sites
 from actions.create_zone import create_zone
 
 from forms import OrganisationForm
+from decorators import login_required
 
-from actions.api import SteelConnectAPI
+from actions.api import SteelConnectAPI, SteelConnectAuthFactory
 
 app = Flask(__name__)
 
 app.secret_key = 'development'
 
 # Setup up api authentication
-app.config["SC_API"]  = SteelConnectAPI("Finn", "Kalapuikot", "monash.riverbed.cc", "org-Monash-d388075e40cf1bfd")
+
+app.config["SC_API"]  = SteelConnectAuthFactory("Finn", "Kalapuikot", "monash.riverbed.cc", "org-Monash-d388075e40cf1bfd")
 
 
 @app.route('/webhook/', methods=['POST'])
@@ -50,27 +52,29 @@ def webhook():
         logging.error("Error processing request {}".format(e))
         return format_response("There was an error processing your request")
 
+    steelconnect_auth = app.config["SC_API"].make_auth()
+
     if action_type == "CreateSite":
-        response = create_site(app.config["SC_API"], parameters)
+        response = create_site(steelconnect_auth, parameters)
     elif action_type == "CreateUplink":
         response = create_uplink(parameters)
     elif action_type == "ListSites":
-        response = list_sites(app.config["SC_API"], parameters)
+        response = list_sites(steelconnect_auth, parameters)
     elif action_type == "ListSites.ListSites-custom":
-        response = list_sites_followup(app.config["SC_API"], req["result"]["contexts"][0]["parameters"])
+        response = list_sites_followup(steelconnect_auth, req["result"]["contexts"][0]["parameters"])
     elif action_type == "ListSites.ListSites-yes":
         parameters["position"] = "all"
-        response = list_sites_followup(app.config["SC_API"], None)
+        response = list_sites_followup(steelconnect_auth, None)
     elif action_type == "CreateWan":
         response = create_wan(parameters)
     elif action_type == "CreateWAN":
-        response = create_WAN(app.config["SC_API"], parameters, contexts)
+        response = create_WAN(steelconnect_auth, parameters, contexts)
     elif action_type == "AddSiteToWAN":
-        response = add_site_to_WAN(app.config["SC_API"], parameters, contexts)
+        response = add_site_to_WAN(steelconnect_auth, parameters, contexts)
     elif action_type == "ClearSites":
         response = clear_sites(parameters)
     elif action_type == "CreateZone":
-        response = create_zone(app.config["SC_API"], parameters)
+        response = create_zone(steelconnect_auth, parameters)
 
 
     # elif action_type == "SomeOtherAction"            # Use elif to add extra functionality
@@ -100,17 +104,19 @@ def format_response(speech):
     r.headers['Content-Type'] = 'application/json'
 
 
-@app.route('/orgID/', methods=['GET', 'POST'])
-def org_form():
+@app.route('/auth/', methods=['GET', 'POST'])
+@login_required
+def auth_form():
     form = OrganisationForm(request.form)
     if form.validate_on_submit():
-        flash("{} {}".format(request.form['org_id'], request.form['org_name']))
+        flash("{} {}".format(request.form['org_id'], request.form['sc_url']))
         return redirect('/test')
     return render_template("details.html",
-                           title="Organisation Details",
+                           title="Authentication Details",
                            form=form)
 
 @app.route('/test/')
+@login_required
 def test():
     return render_template("base.html", title="Test")
 
@@ -138,7 +144,7 @@ def index():
         if me.status == 401:
             return redirect(url_for('logout'))
         elif me.status == 200:
-            return redirect(url_for('org_form'))
+            return redirect(url_for('auth_form'))
         else:
             print(me.status)
             return me.data
@@ -178,6 +184,5 @@ def get_google_oauth_token():
 
 
 if __name__ == '__main__':
-    get()
     # Only used when running locally, uses entrypoint in app.yaml when run on google cloud
     app.run(debug=True, port=8080, host='127.0.0.1')

@@ -12,9 +12,23 @@
             {% endfor %}<br>
         </p>
         <p>
-            Organisation Name:<br>
-            {{  form.org_name(size=80) }}
-            {% for error in form.org_name.errors %}
+            SteelConnect URL:<br>
+            {{  form.sc_url(size=80) }}
+            {% for error in form.sc_url.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}<br>
+        </p>
+        <p>
+            SteelConnect Username:<br>
+            {{  form.sc_username(size=80) }}
+            {% for error in form.sc_username.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}<br>
+        </p>
+        <p>
+            SteelConnect Password:<br>
+            {{  form.sc_password(size=80) }}
+            {% for error in form.sc_password.errors %}
                 <span style="color: red;">[{{ error }}]</span>
             {% endfor %}<br>
         </p>
