@@ -33,3 +33,9 @@ To deploy the app open Google Cloud SDK Shell/terminal switch to the apps direct
 In API-AI under fullfillment enable the webhook and use 'https://your-project-id.appspot.com/webhook/' as the url.
 
 You can now use API-AI to the test out the intents on your realm and organisation.
+
+### Importing the Agent into API.AI
+
+Click the settings icon next to your agents name
+Click 'Export and Import' and then select 'Restore from Zip'
+Upload the 'SteelConnect-API-AI.zip' file from the repository.
