@@ -90,3 +90,9 @@ class SteelConnectAPI:
         }
         data = self.format_data(data)
         return requests.post(url, data=data, auth=self.auth)
+
+    def create_path_rule(self):
+        url = self.org_url() + "path_rules"
+        data = {}
+        data = self.format_data(data)
+        return requests.post(url, data=data, auth=self.auth)
