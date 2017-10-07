@@ -61,7 +61,7 @@ def webhook():
     if action_type == "CreateSite":
         response = create_site(app.config["SC_API"], parameters)
     elif action_type == "CreateUplink":
-        response = create_uplink(parameters)
+        response = create_uplink(app.config["SC_API"],parameters)
     elif action_type == "ListSites":
         response = list_sites(app.config["SC_API"], parameters)
     elif action_type == "ListSites.ListSites-custom":
