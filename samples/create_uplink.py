@@ -66,7 +66,7 @@ hahawan_parameters = {
       "Wans": "hahawan"
     }
 
-melbourne_shop_success_speech_response = "An uplink called directlink had created in site Melbourne_shop to Internet wan"
+melbourne_shop_success_speech_response = "An uplink called directlink has created in site Melbourne_shop to Internet wan"
 tonny_branch_invalid_site_400_speech_response = "Invalid parameters: Invalid param: site"
 tonny_branch_invalid_site_400_api_response = {"error": {"message": "Invalid param: site", "code": 400}}
 hahawan_invalid_wan_400_speech_response = "Invalid parameters: Invalid param: wan"
