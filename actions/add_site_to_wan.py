@@ -30,7 +30,7 @@ def add_site_to_WAN(api_auth, parameters, contexts):
 
         logging.error(error_string)
 
-        return error_string
+        return "Unable to add site to WAN"
 
     speech = create_uplink.create_uplink(api_auth, new_parameters)
 

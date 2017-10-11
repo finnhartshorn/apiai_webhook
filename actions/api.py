@@ -28,6 +28,15 @@ class SteelConnectAPI:
         else:
             return None
 
+    @staticmethod
+    def find_contexts_by_name(contexts, name):
+        context_list = []
+        for context in contexts:
+            if context["name"] == name:
+                context_list.append(context)
+        return context_list
+
+
     def org_url(self):
         return SteelConnectAPI.api_url.format(self.base_url) + "org/{}/".format(self.org_id)
 
